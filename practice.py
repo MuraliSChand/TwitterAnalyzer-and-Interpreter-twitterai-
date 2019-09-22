@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 
 class Practice:
 
-    def __init__(self,file, fresh = False, add_handles = True, add_retweet = True):
+    def __init__(self,file, add_handles = True, add_retweet = True, fresh = False):
         self.file = file
         self.add_retweet = add_retweet
         self.handles = add_handles
