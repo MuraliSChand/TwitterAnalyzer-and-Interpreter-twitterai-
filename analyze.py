@@ -1,19 +1,18 @@
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from pandas.plotting import register_matplotlib_converters
-import sys
-sys.path.append("C:\\Users\\Murali Sai Chand\\PycharmProjects\\Twitterai")
 from practice import Practice
 register_matplotlib_converters()
 
 
 class Analyze:
-    def __init__(self):
-        self.p = Practice("C:\\Users\\Murali Sai Chand\\PycharmProjects\\Twitterai\\tweets2.json", False, False, False)
+    def __init__(self, filename):
+        self.p = Practice(filename, False, False, False)
         self.fig = plt.figure()
         self.ax = self.fig.add_subplot(131)
         self.ax2 = self.fig.add_subplot(132)
         self.ax3 = self.fig.add_subplot(133)
+        self.words = []
 
 
         self.ax2.plot([0], [0])
@@ -24,7 +23,7 @@ class Analyze:
         # global p
         # p = Practice("C:\\Users\\Murali Sai Chand\\PycharmProjects\\Twitterai\\tweets2.json")
         # p1 = get_obj()
-        words = ['suriya','anand','mohanlal']
+        words = self.words
         x = self.p.sentiments(words)
         self.ax2.clear()
         for n, i in enumerate(x):
@@ -43,7 +42,7 @@ class Analyze:
         # p = Practice("C:\\Users\\Murali Sai Chand\\PycharmProjects\\Twitterai\\tweets2.json")
         # p1 = get_obj()
         self.p.reflat()
-        dfs, names = self.p.finalize(['suriya','anand','mohanlal'])
+        dfs, names = self.p.finalize(self.words)
         self.ax.clear()
         for j, i in enumerate(dfs):
             x = i.index
@@ -75,12 +74,13 @@ class Analyze:
         plt.xticks(rotation=75)
         self.fig.canvas.draw()
 
-    def show_viz(self):
+    def show_viz(self, words = []):
+        self.words = words
         ani2 = animation.FuncAnimation(self.fig, self.animate, interval=3000)
         ani = animation.FuncAnimation(self.fig, self.animate_sent, interval=3000)
         ani3 = animation.FuncAnimation(self.fig, self.viz_top, interval=3000)
         plt.show()
 
-ob = Analyze()
-ob.show_viz()
+#ob = Analyze()
+#ob.show_viz()
 
